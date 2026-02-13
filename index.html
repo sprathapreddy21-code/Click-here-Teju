@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>To my Teju ❤️</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* General Styles with Background */
+body {
+    margin: 0;
+    padding: 0;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+/* Dark overlay to make text readable */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 50% dark overlay */
+    z-index: -1;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+}
+
+/* Main Heading */
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 60px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* subtle glow for readability */
+}
+
+/* Typewriter Text */
+#typewriter {
+    font-size: 22px;
+    line-height: 1.6;
+    min-height: 100px;
+}
+
+#typewriter::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+/* Buttons */
+button {
+    margin: 15px;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+    background: black;
+    color: white;
+}
+
+#finalMessage {
+    display: none;
+    font-size: 28px;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 2s ease-in-out;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+/* Fade In Effect */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Falling Roses & Hearts with Sway */
+.falling {
+    position: absolute;
+    top: -50px;
+    font-size: 24px;
+    animation: fall linear infinite, sway ease-in-out infinite alternate;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(20px); }
+}
+
+/* Fade Screen */
+.fadeScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 10;
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* Confetti */
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    opacity: 0.8;
+    transform: rotate(0deg);
+    pointer-events: none;
+    z-index: 20;
+}
+</style>
+</head>
+
+<body>
+
+<div class="fadeScreen"></div>
+
+<!-- Music -->
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Optional Play Button -->
+<button id="playMusicBtn" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    z-index: 30;
+">Play Music 🎵</button>
+
+<script>
+// Get music element
+const music = document.getElementById('music');
+const playBtn = document.getElementById('playMusicBtn');
+
+// Try autoplay muted first
+music.muted = true;
+music.play().then(() => {
+    music.muted = false; // unmute if allowed
+}).catch(() => {
+    console.log('Autoplay blocked, waiting for user interaction');
+    // Show play button
+    playBtn.style.display = 'block';
+});
+
+// Play button click
+playBtn.addEventListener('click', () => {
+    music.play();
+    music.muted = false;
+    playBtn.style.display = 'none';
+});
+</script>
+
+<div class="center">
+    <h1>Teju, Will you be my Valentine?</h1>
+
+    <div id="typewriter"></div>
+
+    <div id="buttons" style="display:none;">
+        <button onclick="sayYes()">Yes ❤️</button>
+        <button id="noBtn" onmouseover="runAway()">No 😏</button>
+    </div>
+
+    <div id="finalMessage">
+        I promise to choose you —<br>
+        today, tomorrow, and always.<br>
+        I Love You Teju ❤️
+    </div>
+</div>
+
+<script>
+// Typewriter Effect
+const text = "In a world full of ordinary moments...\nYou became my extraordinary one.\nYou make my silence peaceful,\nand my chaos beautiful. Most importantly you understand me Completely...";
+let index = 0;
+
+function typeWriter() {
+    if (index < text.length) {
+        const char = text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
+        document.getElementById("typewriter").innerHTML += char;
+        index++;
+        setTimeout(typeWriter, 40);
+    } else {
+        document.getElementById("buttons").style.display = "block";
+    }
+}
+
+setTimeout(typeWriter, 2000);
+
+// Yes Button
+function sayYes() {
+    document.getElementById("finalMessage").style.display = "block";
+    launchConfetti();
+}
+
+// No Button - Runaway
+function runAway() {
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.position = "absolute";
+    noBtn.style.top = Math.random() * 70 + "%";
+    noBtn.style.left = Math.random() * 70 + "%";
+}
+
+// Floating Roses & Hearts
+function createFalling() {
+    const symbols = ["🌹","❤️","💖","💘"];
+    const elem = document.createElement("div");
+    elem.classList.add("falling");
+    elem.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+    elem.style.left = Math.random() * 100 + "vw";
+    elem.style.fontSize = (Math.random() * 24 + 16) + "px";
+    elem.style.animationDuration = (Math.random() * 3 + 4) + "s, " + (Math.random() * 2 + 2) + "s";
+    elem.style.animationDelay = "0s, 0s";
+    document.body.appendChild(elem);
+
+    setTimeout(() => {
+        elem.remove();
+    }, 7000);
+}
+
+setInterval(createFalling, 200);
+
+// Confetti on Yes
+function launchConfetti() {
+    const colors = ["#ff4d6d","#ffb6c1","#ff69b4","#ffe4e1"];
+    for(let i=0; i<150; i++){
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti-piece");
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = Math.random() * window.innerHeight + "px";
+        confetti.style.width = Math.random()*8 + 5 + "px";
+        confetti.style.height = confetti.style.width;
+        confetti.style.transform = `rotate(${Math.random()*360}deg)`;
+        document.body.appendChild(confetti);
+
+        let top = parseFloat(confetti.style.top);
+        let left = parseFloat(confetti.style.left);
+        const speedX = (Math.random()-0.5) * 5;
+        const speedY = Math.random() * 5 + 2;
+        const interval = setInterval(() => {
+            top += speedY;
+            left += speedX;
+            confetti.style.top = top + "px";
+            confetti.style.left = left + "px";
+        }, 20);
+
+        setTimeout(() => {
+            clearInterval(interval);
+            confetti.remove();
+        }, 4000);
+    }
+}
+</script>
+
+</body>
+</html>
+
+
+
+
